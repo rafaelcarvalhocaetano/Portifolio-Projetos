@@ -1,9 +1,0 @@
-<div class="menu-mobile" *ngIf="show">
-  <button class="btn-closed" (click)="isClosed.emit(false)">X</button>
-
-  <ul class="list-menu-mobile">
-    <li *ngFor="let item of list">
-      <a [routerLink]="[item.path]" (click)="isClosed.emit(false)">{{ item.name }}</a>
-    </li>
-  </ul>
-</div>
