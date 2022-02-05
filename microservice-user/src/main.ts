@@ -8,11 +8,11 @@ async function bootstrap() {
   const app = await NestFactory.createMicroservice(AppModule, {
     Transport: Transport.RMQ,
     option: {
-      urls: [process.env.AMQP_URL],
+      url: [process.env.AMQP_URL],
       queue: RabbitMQ.UserQueue,
     },
   });
   await app.listen();
-  console.log(' microservice rabbitmq users ');
+  console.log(' MICROSERVICE in the RabbitMQ (users) ');
 }
 bootstrap();
