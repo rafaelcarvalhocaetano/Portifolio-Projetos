@@ -5,7 +5,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 @Injectable()
 export class TaskService {
   create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+    return new Promise((r, rej) => setTimeout(() => rej('deu ruim'), 15000));
   }
 
   findAll() {
