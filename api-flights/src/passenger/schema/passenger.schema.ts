@@ -7,5 +7,5 @@ export const PassengerSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
-PassengerSchema.index({ username: 1 }, { unique: true });
+PassengerSchema.index({ name: 1 }, { unique: true });
 PassengerSchema.index({ email: 1 }, { unique: true });

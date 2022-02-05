@@ -29,10 +29,14 @@ export class PassengerService {
     id: string,
     updatePassengerDto: UpdatePassengerDto,
   ): Promise<Passenger> {
-    return await this.model.findByIdAndUpdate(id, updatePassengerDto);
+    const data = await this.model.findByIdAndUpdate(id, updatePassengerDto);
+    return data;
   }
 
   remove(id: string) {
     this.model.findByIdAndDelete(id);
+    return {
+      message: `Passenger id: ${id} deleted success.`,
+    };
   }
 }

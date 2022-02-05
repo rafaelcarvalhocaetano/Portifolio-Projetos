@@ -23,6 +23,10 @@ export class UserService {
     return await newUser.save();
   }
 
+  async findByUsername(username: string): Promise<User> {
+    return await this.model.findOne({ username });
+  }
+
   async findAll(): Promise<User[]> {
     return await this.model.find();
   }
@@ -39,5 +43,9 @@ export class UserService {
 
   remove(id: string) {
     this.model.findByIdAndDelete(id);
+  }
+
+  async checkPassword(password: string, passwordDB: string): Promise<boolean> {
+    return await bcrypt.compare(password, passwordDB);
   }
 }
