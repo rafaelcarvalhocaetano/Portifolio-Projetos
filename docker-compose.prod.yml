@@ -2,11 +2,8 @@ version: '3.7'
 
 services:
     api_gateway:
-      image: api_gateway:v1
+      image: rafaelcarvalhocaetano/api_gateway:v1
       container_name: api_gateway
-      build:
-        context: ./api-gateway
-        dockerfile: Dockerfile
       env_file: .env
       volumes:
         - ./logs:/api_gateway/log
@@ -20,11 +17,8 @@ services:
         - microservice_nestjs
    
     microservice_flights:
-      image: microservice_flights:v1
+      image: rafaelcarvalhocaetano/microservice_flights:v1
       container_name: microservice_flights
-      build:
-        context: ./microservice-flights
-        dockerfile: Dockerfile
       env_file: .env
       volumes:
         - ./logs:/microservice_flights/log
@@ -36,11 +30,8 @@ services:
         - microservice_nestjs
     
     microservice_passengers:
-      image: microservice_passengers:v1
+      image: rafaelcarvalhocaetano/microservice_passengers:v1
       container_name: microservice_passengers
-      build:
-        context: ./microservice-passengers
-        dockerfile: Dockerfile
       env_file: .env
       volumes:
         - ./logs:/microservice_passengers/log
@@ -52,11 +43,8 @@ services:
         - microservice_nestjs
 
     microservice_users:
-      image: microservice_users:v1
+      image: rafaelcarvalhocaetano/microservice_users:v1
       container_name: microservice_users
-      build:
-        context: ./microservice-user
-        dockerfile: Dockerfile
       env_file: .env
       volumes:
         - ./logs:/microservice_users/log
@@ -93,6 +81,7 @@ services:
 
 volumes:
   mongodb:
+  logs:
 
 networks:
   microservice_nestjs:
