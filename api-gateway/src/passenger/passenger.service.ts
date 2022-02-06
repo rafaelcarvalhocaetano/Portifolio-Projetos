@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
 
 import { PassengerMSG } from '../common/proxy/rabbitmq.enum';
 import { ClientProxyFlight } from '../common/proxy/client-proxy';
@@ -11,29 +12,29 @@ export class PassengerService {
 
   private _clientProxyPassenger = this.clientProxy.clientProxyPassenger();
 
-  send(createPassengerDto: CreatePassengerDto) {
+  send(createPassengerDto: CreatePassengerDto): Observable<any> {
     return this._clientProxyPassenger.send(
       PassengerMSG.CREATE,
       createPassengerDto,
     );
   }
 
-  findAll() {
+  findAll(): Observable<any> {
     return this._clientProxyPassenger.send(PassengerMSG.FIND_ALL, '');
   }
 
-  findOne(id: string) {
+  findOne(id: string): Observable<any> {
     return this._clientProxyPassenger.send(PassengerMSG.FIND_ONE, id);
   }
 
-  update(id: string, updatePassengerDto: UpdatePassengerDto) {
+  update(id: string, updatePassengerDto: UpdatePassengerDto): Observable<any> {
     return this._clientProxyPassenger.send(PassengerMSG.UPDATE, {
       id,
       updatePassengerDto,
     });
   }
 
-  remove(id: string) {
+  remove(id: string): Observable<any> {
     return this._clientProxyPassenger.send(PassengerMSG.DELETE, id);
   }
 }

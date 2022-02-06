@@ -48,4 +48,14 @@ export class UserService {
   async checkPassword(password: string, passwordDB: string): Promise<boolean> {
     return await bcrypt.compare(password, passwordDB);
   }
+
+  async validateUser(username: string, password: string): Promise<any> {
+    const user = await this.findByUsername(username);
+    const isValidPassword = await this.checkPassword(
+      password,
+      user.password,
+    );
+    if (user && isValidPassword) return user;
+    return null;
+  }
 }

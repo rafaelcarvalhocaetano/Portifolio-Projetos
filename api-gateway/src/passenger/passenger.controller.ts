@@ -6,29 +6,34 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Observable } from 'rxjs';
+
 import { PassengerService } from './passenger.service';
 import { CreatePassengerDto } from './dto/create-passenger.dto';
 import { UpdatePassengerDto } from './dto/update-passenger.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Passenger')
-@Controller('api/ms/passenger')
+@UseGuards(JwtAuthGuard)
+@Controller('api/gateway/passenger')
 export class PassengerController {
   constructor(private readonly passengerService: PassengerService) {}
 
   @Post()
-  send(@Body() createPassengerDto: CreatePassengerDto) {
+  send(@Body() createPassengerDto: CreatePassengerDto): Observable<any> {
     return this.passengerService.send(createPassengerDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Observable<any> {
     return this.passengerService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Observable<any> {
     return this.passengerService.findOne(id);
   }
 
@@ -36,12 +41,12 @@ export class PassengerController {
   update(
     @Param('id') id: string,
     @Body() updatePassengerDto: UpdatePassengerDto,
-  ) {
+  ): Observable<any> {
     return this.passengerService.update(id, updatePassengerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Observable<any> {
     return this.passengerService.remove(id);
   }
 }

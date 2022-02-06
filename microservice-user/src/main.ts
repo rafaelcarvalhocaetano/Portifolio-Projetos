@@ -13,6 +13,6 @@ async function bootstrap() {
     },
   });
   await app.listen();
-  console.log(' MICROSERVICE in the RabbitMQ (users) ');
+  console.log(`MicroService == Users == RabbitMQ `)
 }
 bootstrap();

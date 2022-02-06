@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ClientProxyFlight } from 'src/common/proxy/client-proxy';
-import { FlightMSG } from 'src/common/proxy/rabbitmq.enum';
+import { FlightMSG, PassengerMSG } from 'src/common/proxy/rabbitmq.enum';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
 
@@ -9,6 +9,7 @@ export class FlightService {
   constructor(private readonly clientProxy: ClientProxyFlight) {}
 
   private _clientProxyFlight = this.clientProxy.clientProxyFlight();
+  private _clientProxyPassenger = this.clientProxy.clientProxyPassenger();
 
   create(createPassengerDto: CreateFlightDto) {
     return this._clientProxyFlight.send(FlightMSG.CREATE, createPassengerDto);
@@ -31,5 +32,13 @@ export class FlightService {
 
   remove(id: string) {
     return this._clientProxyFlight.send(FlightMSG.DELETE, id);
+  }
+
+  async addPessagen(flightId: string, passengerId: string) {
+    const passenge = await this._clientProxyPassenger.send(PassengerMSG.FIND_ONE, passengerId).toPromise();
+    if (!passenge) {
+      throw new HttpException('Not found passenger', HttpStatus.NOT_FOUND);
+    }
+    return this._clientProxyFlight.send(FlightMSG.ADD_PASSENGER, { flightId, passengerId})
   }
 }

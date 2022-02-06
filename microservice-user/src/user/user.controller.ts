@@ -36,4 +36,9 @@ export class UserController {
       message: `User id ${id} deleted success `,
     };
   }
+
+  @MessagePattern(UserMSG.VALID)
+  async validateUser(@Payload() payload: any): Promise<any> {
+    return this.userService.validateUser(payload.username, payload.password);
+  }
 }

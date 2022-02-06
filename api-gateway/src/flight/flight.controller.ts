@@ -6,14 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+
 import { FlightService } from './flight.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Flights')
-@Controller('api/ms/flight')
+@UseGuards(JwtAuthGuard)
+@Controller('api/gateway/flight')
 export class FlightController {
   constructor(private readonly flightService: FlightService) {}
 
@@ -40,5 +44,13 @@ export class FlightController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.flightService.remove(id);
+  }
+
+  @Post(':flightId/passenger/:passengerId')
+  async addPassenger(
+    @Param('flightId') flightId: string,
+    @Param('passengerId') passengerId: string
+  ) {
+    return this.flightService.addPessagen(flightId, passengerId);
   }
 }
