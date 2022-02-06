@@ -1,27 +1,29 @@
 ## Microservices:
 
- Run applications:
+  - Run applications:
     
     ```
-    
+
     npm run build in dir (gateway - flight - passengers - users)
     docker-compose up --build -d
     
     ```
 
-### Send to docker hub: ``` run within each directories ```
+### Send to docker hub: 
+  
+  - ``` run within each directories ```
 
-  - (TAG):
+  - (Tag):
 
       ```
 
       docker tag api_gateway:v1 rafaelcarvalhocaetano/api_gateway:v1
-      docker tag microservice_flights:v1 rafaelcarvalhocaetano/microservice_flights:v1
-      docker tag microservice_passengers:v1 rafaelcarvalhocaetano/microservice_passengers:v1
-      docker tag microservice_users:v1 rafaelcarvalhocaetano/microservice_users:v1
+      docker tag microservice_flights:v1 varlab/microservice_flights:v1
+      docker tag microservice_passengers:v1 varlab/microservice_passengers:v1
+      docker tag microservice_users:v1 varlab/microservice_users:v1
       
       ```
-  - (SEND):
+  - (Send):
 
       ```
 
