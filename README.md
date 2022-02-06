@@ -1,6 +1,6 @@
 ## Microservices:
 
-  - Run applications:
+ Run applications:
     
     ```
     
