@@ -1,0 +1,93 @@
+version: '3.7'
+
+services:
+    api_gateway:
+      image: api_gateway:v1
+      container_name: api_gateway
+      build:
+        context: ./api-gateway
+        dockerfile: Dockerfile
+      env_file: .env
+      ports: 
+        - 80:3000
+      depends_on:
+        - mongodb
+        - rabbitmq
+      restart: always
+      networks:
+        - microservice_nestjs
+   
+    microservice_flights:
+      image: microservice_flights:v1
+      container_name: microservice_flights
+      build:
+        context: ./microservice-flights
+        dockerfile: Dockerfile
+      env_file: .env
+      depends_on:
+        - mongodb
+        - rabbitmq
+      restart: always
+      networks:
+        - microservice_nestjs
+    
+    microservice_passengers:
+      image: microservice_passengers:v1
+      container_name: microservice_passengers
+      build:
+        context: ./microservice-passengers
+        dockerfile: Dockerfile
+      env_file: .env
+      depends_on:
+        - mongodb
+        - rabbitmq
+      restart: always
+      networks:
+        - microservice_nestjs
+
+    microservice_users:
+      image: microservice_users:v1
+      container_name: microservice_users
+      build:
+        context: ./microservice-user
+        dockerfile: Dockerfile
+      env_file: .env
+      depends_on:
+        - mongodb
+        - rabbitmq
+      restart: always
+      networks:
+        - microservice_nestjs
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq
+        expose:
+          - 5672
+          - 15672
+        restart: always
+        networks:
+          - microservice_nestjs
+
+    mongodb:
+        image: mongo:latest
+        container_name: mongodb
+        restart: always
+        environment:
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+        volumes:
+            - mongodb:/data/db
+        expose:
+            - 27017
+        networks:
+          - microservice_nestjs          
+
+volumes:
+  mongodb:
+
+networks:
+  microservice_nestjs:
+
+        
+
