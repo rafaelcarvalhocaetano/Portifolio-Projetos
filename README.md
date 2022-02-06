@@ -1,6 +1,6 @@
 ## Microservices:
 
-  - Run applications:
+ Run applications:
     
     ```
       - npm run build in dir (gateway - flight - passengers - users)
