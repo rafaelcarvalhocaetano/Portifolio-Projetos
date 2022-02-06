@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserMSG } from 'src/common/proxy/rabbitmq.enum';
+import { Observable } from 'rxjs';
 
+import { UserMSG } from '../common/proxy/rabbitmq.enum';
 import { ClientProxyFlight } from '../common/proxy/client-proxy';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -11,23 +12,23 @@ export class UserService {
 
   private _clientProxyUser = this.clientProxy.clientProxyUsers();
 
-  sendUser(createUserDto: CreateUserDto) {
+  sendUser(createUserDto: CreateUserDto): Observable<any> {
     return this._clientProxyUser.send(UserMSG.CREATE, createUserDto);
   }
 
-  findAll() {
+  findAll(): Observable<any> {
     return this._clientProxyUser.send(UserMSG.FIND_ALL, '');
   }
 
-  findOne(id: string) {
+  findOne(id: string): Observable<any> {
     return this._clientProxyUser.send(UserMSG.FIND_ONE, id);
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto): Observable<any> {
     return this._clientProxyUser.send(UserMSG.UPDATE, { id, updateUserDto });
   }
 
-  remove(id: string) {
+  remove(id: string): Observable<any> {
     return this._clientProxyUser.send(UserMSG.DELETE, id);
   }
 }

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { FlightService } from './flight.service';
 import { FlightController } from './flight.controller';
-import { ProxyModule } from 'src/common/proxy/client-proxy.modele';
+import { ProxyModule } from '../common/proxy/client-proxy.module';
 
 @Module({
   imports: [ProxyModule],

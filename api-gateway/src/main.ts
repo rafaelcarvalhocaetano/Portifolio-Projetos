@@ -24,7 +24,7 @@ async function bootstrap() {
       filter: true,
     },
   });
-
-  await app.listen(process.env.PORT || 3002);
+  console.log(`http://localhost:${process.env.PORT}/api/ms`);
+  await app.listen(process.env.PORT || 3001);
 }
 bootstrap();
