@@ -1,90 +1,97 @@
 version: '3.7'
 
 services:
-    api_gateway:
-      image: rafaelcarvalhocaetano/api_gateway:v1
-      container_name: api_gateway
-      env_file: .env
-      volumes:
-        - ./logs:/api_gateway/log
-      ports: 
-        - "${PORT}:${PORT}"
-      depends_on:
-        - mongodb
-        - rabbitmq
-      restart: always
-      networks:
-        - microservice_nestjs
-   
-    microservice_flights:
-      image: rafaelcarvalhocaetano/microservice_flights:v1
-      container_name: microservice_flights
-      env_file: .env
-      volumes:
-        - ./logs:/microservice_flights/log
-      depends_on:
-        - mongodb
-        - rabbitmq
-      restart: always
-      networks:
-        - microservice_nestjs
-    
-    microservice_passengers:
-      image: rafaelcarvalhocaetano/microservice_passengers:v1
-      container_name: microservice_passengers
-      env_file: .env
-      volumes:
-        - ./logs:/microservice_passengers/log
-      depends_on:
-        - mongodb
-        - rabbitmq
-      restart: always
-      networks:
-        - microservice_nestjs
+  api_gateway:
+    image: rafaelcarvalhocaetano/api_gateway:v1
+    container_name: api_gateway
+    ports: 
+      - ${PORT}:${PORT}
+    env_file: .env
+    links:
+      - mongodb
+      - rabbitmq
+    depends_on:
+      - mongodb
+      - rabbitmq
+    restart: always
+    networks:
+      - microservice_nestjs
+  
+  microservice_flights:
+    image: rafaelcarvalhocaetano/microservice_flights:v1
+    container_name: microservice_flights
+    env_file: .env
+    links:
+      - mongodb
+      - rabbitmq
+    depends_on:
+      - mongodb
+      - rabbitmq
+    restart: always
+    networks:
+      - microservice_nestjs
+  
+  microservice_passengers:
+    image: rafaelcarvalhocaetano/microservice_passengers:v1
+    container_name: microservice_passengers
+    env_file: .env
+    links:
+      - mongodb
+      - rabbitmq
+    depends_on:
+      - mongodb
+      - rabbitmq
+    restart: always
+    networks:
+      - microservice_nestjs
 
-    microservice_users:
-      image: rafaelcarvalhocaetano/microservice_users:v1
-      container_name: microservice_users
-      env_file: .env
-      volumes:
-        - ./logs:/microservice_users/log
-      depends_on:
-        - mongodb
-        - rabbitmq
-      restart: always
-      networks:
-        - microservice_nestjs
+  microservice_users:
+    image: rafaelcarvalhocaetano/microservice_users:v1
+    container_name: microservice_users
+    env_file: .env
+    links:
+      - mongodb
+      - rabbitmq
+    depends_on:
+      - mongodb
+      - rabbitmq
+    restart: always
+    networks:
+      - microservice_nestjs
 
-    rabbitmq:
-        image: rabbitmq:3-management
-        container_name: rabbitmq
-        expose:
-          - 5672
-          - 15672
-        restart: always
-        networks:
-          - microservice_nestjs
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    command: rabbitmq-server
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=root
+    ports:
+      - 15672:15672
+    restart: always
+    networks:
+      - microservice_nestjs
 
-    mongodb:
-        image: mongo:latest
-        container_name: mongodb
-        restart: always
-        environment:
-            - MONGO_DATA_DIR=/data/db
-            - MONGO_LOG_DIR=/dev/null
-        volumes:
-            - mongodb:/data/db
-        expose:
-            - 27017
-        networks:
-          - microservice_nestjs          
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - microservice_nestjs          
 
 volumes:
   mongodb:
-  logs:
 
 networks:
   microservice_nestjs:
+    driver: bridge
 
         
 
