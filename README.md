@@ -17,20 +17,20 @@
 
       ```
 
-      docker tag api_gateway:v1 rafaelcarvalhocaetano/api_gateway:v1
-      docker tag microservice_flights:v1 varlab/microservice_flights:v1
-      docker tag microservice_passengers:v1 varlab/microservice_passengers:v1
-      docker tag microservice_users:v1 varlab/microservice_users:v1
+      docker tag api_gateway:v1 your_name/api_gateway:v1
+      docker tag microservice_flights:v1 your_name/microservice_flights:v1
+      docker tag microservice_passengers:v1 your_name/microservice_passengers:v1
+      docker tag microservice_users:v1 your_name/microservice_users:v1
       
       ```
   - (Send):
 
       ```
 
-      docker push rafaelcarvalhocaetano/api_gateway:v1
-      docker push rafaelcarvalhocaetano/microservice_flights:v1
-      docker push rafaelcarvalhocaetano/microservice_passengers:v1
-      docker push rafaelcarvalhocaetano/microservice_users:v1
+      docker push your_name/api_gateway:v1
+      docker push your_name/microservice_flights:v1
+      docker push your_name/microservice_passengers:v1
+      docker push your_name/microservice_users:v1
       
       ```
 
