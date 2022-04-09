@@ -30,7 +30,7 @@
     "amqp-connection-manager": "^4.1.1",
     "amqplib": "^0.8.0",
     "axios": "^0.25.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongoose": "^6.2.0",
     "mongoose-autopopulate": "^0.16.0",
     "reflect-metadata": "^0.1.13",
